@@ -25,6 +25,7 @@ export async function searchLimitedResults(searchString, limit) {
 
 export async function searchInMarket(searchString, market, limit) {
   const url = `https://preisrunter.at/api/search/products/?product=${searchString}&only${market}=true&searchLimit=${limit}`;
+
   const response = await fetch(url);
   const data = await response.json();
   // Process the received data
@@ -96,11 +97,12 @@ export async function showCartItems(cartName) {
 
 export async function getProductBarcodeName(query) {
   const url = `https://world.openfoodfacts.org/api/v0/product/${query}.json`;
+  //console.log(url)
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    return data.product._keywords.join(" ");
+    return  data.product.brands;
   } catch (error) {
     return false;
   }
@@ -108,10 +110,10 @@ export async function getProductBarcodeName(query) {
 
 export async function getProductWithProductId(productID, market, returnSize) {
   const barcodeName = await getProductBarcodeName(productID);
+  //console.log(barcodeName)
+
   if (barcodeName) {
     return await searchInMarket(barcodeName, market, returnSize);
-  } else {
-    return "No valid product found";
   }
 }
 

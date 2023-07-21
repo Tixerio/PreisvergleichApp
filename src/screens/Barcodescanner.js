@@ -4,9 +4,6 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const BarcodeScannerScreen = ({ route, navigation }) => {
 
-    const { testOutput } = route.params
-
-    console.log(testOutput)
   const [hasPermission, setHasPermission] = useState(null);
   const [scannedData, setScannedData] = useState('');
 
